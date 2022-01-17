@@ -38,18 +38,19 @@ router = APIRouter( prefix= "/posts",
 tags=["Posts"])
 
 
-@router.get("/" ,status_code=status.HTTP_200_OK ,response_model=List[schemas.PostOut])
+@router.get("/" ,status_code=status.HTTP_200_OK )#response_model=List[schemas.PostOut])
 def get_post(db: Session= Depends(get_db), limit: int= 10, skip:int =0, search: Optional[str]= " "):
 
-    print("EROOR:" , models.Post) 
+   # print("EROOR:" , models.Post) 
     
     post= db.query(models.Post).filter(models.Post.title.contains(search)).limit(limit).offset(skip).all()
     #cursor.execute(""" SELECT * FROM posts""")
     #post= cursor.fetchall()
     #print(post)
 
-    results= db.query(models.Post, func.count(models.Vote.post_id).label("votes")).join(models.Vote, models.Vote.post_id==models.Post.id, isouter= True).group_by(models.Post.id).filter(models.Post.title.contains(search)).limit(limit).offset(skip).all()
-    #print (results)
+    results= db.query(models.Post).all() #, func.count(models.Vote.post_id).label("votes")).join(models.Vote, models.Vote.post_id==models.Post.id, isouter= True).group_by(models.Post.id).filter(models.Post.title.contains(search)).limit(limit).offset(skip).all()
+    
+    print (db.query(models.Post, func.count(models.Vote.post_id).label("votes")).join(models.Vote, models.Vote.post_id==models.Post.id, isouter= True).group_by(models.Post.id).filter(models.Post.title.contains(search)).limit(limit).offset(skip).all())
     return results
 
 
