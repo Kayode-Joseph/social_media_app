@@ -22,7 +22,7 @@ from .. import database, schemas, models, utils, oauth2
 
 
 
-import oauth2
+#import oauth2
 router= APIRouter(tags=["Authentication"])
 
 @router.post('/login', response_model= schemas.Token)
