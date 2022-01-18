@@ -1,36 +1,37 @@
-from typing import Counter, List, Optional
-import sys
-from fastapi import FastAPI , Response, status, HTTPException, Depends, APIRouter
-from fastapi.params import Body, Depends
+from typing import Optional
+
+from fastapi import  status, HTTPException, Depends, APIRouter
+from fastapi.params import  Depends
 #from fastapi.security import oauth2
-from passlib.utils.decor import deprecated_function
-from pydantic import BaseModel
+
+
 
 from sqlalchemy import func
 
 
 from sqlalchemy.orm import Session
-import psycopg2
-
-from psycopg2.extras import DictCursor, RealDictCursor
-
-from random import randrange
 
 
-sys.path.append("/Users/hardknxcklife-/Documents/building apis/app")
 
-import models
 
-import schemas
+#ys.path.append("/Users/hardknxcklife-/Documents/building apis/app")
+
+#import models
+
+#import schemas
 
 from database import engine, get_db
 
-import utils
+#import utils
 
-sys.path.append("/Users/hardknxcklife-/Documents/building apis/app/routers")
+#sys.path.append("/Users/hardknxcklife-/Documents/building apis/app/routers")
 
 
-import oauth2
+#import oauth2
+
+from .. import models, schemas, oauth2
+from ..database import get_db
+
 
 models.Base.metadata.create_all(bind=engine)
 

@@ -1,13 +1,12 @@
-from fastapi import FastAPI , Response, status, HTTPException, Depends, APIRouter
-import sys
+from fastapi import  status, HTTPException, Depends, APIRouter
+
 
 from sqlalchemy.orm.session import Session
-from starlette.status import HTTP_404_NOT_FOUND
-from starlette.types import Message
 
 
-sys.path.append("/Users/hardknxcklife-/Documents/building apis/app")
-import schemas, database,models, oauth2
+
+
+from .. import schemas, database, models, oauth2
 
 
 router= APIRouter(

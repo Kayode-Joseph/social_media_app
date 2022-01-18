@@ -2,11 +2,10 @@ from pydantic import BaseModel, validator, ValidationError
 from datetime import datetime
 
 from pydantic.networks import EmailStr
-from typing import Optional, List
+from typing import Optional
 
-from enum import Enum
 
-from pydantic.types import conint
+
 
 
 #the schema attributes are named according to the database attribute u want for post response models and according to the body for input models

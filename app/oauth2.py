@@ -1,31 +1,31 @@
-import fastapi
+
 from jose import JWTError, jwt 
 
-import sys
+from . import schemas, database, models
 
 from datetime import datetime, timedelta
 
-from pydantic.networks import HttpUrl
+
 
 from fastapi import Depends, status, HTTPException
 
 from fastapi.security import OAuth2PasswordBearer
 #from app.database import get_db
 
-sys.path.append("/Users/hardknxcklife-/Documents/building apis/app")
+#sys.path.append("/Users/hardknxcklife-/Documents/building apis/app")
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl='login')
 
-import schemas
+#import schemas
 
-import database
+#import database
 
-import models
+#import models
 
 from sqlalchemy.orm import Session
 
-from config import settings
-
+#from config import settings
+from .config import settings
 
 SECRET_KEY= settings.secret_key
 ALGORITHM = settings.algorithm

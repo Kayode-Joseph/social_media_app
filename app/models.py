@@ -1,22 +1,20 @@
 import random
-from typing import ContextManager
-from sqlalchemy.orm import relation, relationship
 
-from sqlalchemy.sql.expression import column, text
+from sqlalchemy.orm import  relationship
+
+from sqlalchemy.sql.expression import text
 from sqlalchemy.sql.schema import ForeignKey
 
-import sys
 
 
 from sqlalchemy.sql.sqltypes import TIMESTAMP, Boolean, String
-#from .database import Base 
+from .database import Base 
 
 from sqlalchemy import Column, Integer, String
 
-sys.path.append("/Users/hardknxcklife-/Documents/building apis/app")
 
 
-from database import Base 
+
 
 k=random.randint(1,100)
 

@@ -1,10 +1,8 @@
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-import sys
-sys.path.append("/Users/hardknxcklife-/Documents/building apis/app")
 
-from config import settings
+from .config import settings
 
 #SQLALCHEMY_DATABASES_URL='postgresql://<username>:<password>@<server ip adress>/<databasename>'
 

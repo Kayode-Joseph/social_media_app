@@ -7,23 +7,26 @@ from fastapi.security.oauth2 import OAuth2PasswordRequestForm
 import sys
 #from app.routers.users import user
 
-sys.path.append("/Users/hardknxcklife-/Documents/building apis/app")
+#sys.path.append("/Users/hardknxcklife-/Documents/building apis/app")
 
-from database import get_db
+#from database import get_db
 
-import schemas
+#import schemas
 
-import utils
-import models
+#import utils
+#import models
 
-sys.path.append("/Users/hardknxcklife-/Documents/building apis/app/routers")
+#sys.path.append("/Users/hardknxcklife-/Documents/building apis/app/routers")
+
+from .. import database, schemas, models, utils, oauth2
+
 
 
 import oauth2
 router= APIRouter(tags=["Authentication"])
 
 @router.post('/login', response_model= schemas.Token)
-def login(user_cred: OAuth2PasswordRequestForm=Depends(), db: Session= Depends(get_db)):
+def login(user_cred: OAuth2PasswordRequestForm=Depends(), db: Session= Depends(database.get_db)):
 
     #outh2paassword request form has two fields; username and password
     

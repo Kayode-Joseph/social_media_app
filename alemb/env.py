@@ -5,13 +5,16 @@ from sqlalchemy import pool
 
 from alembic import context
 
-import sys
+#import sys
 
-sys.path.append("/Users/hardknxcklife-/Documents/building apis")
+#sys.path.append("/Users/hardknxcklife-/Documents/building apis")
 
-from app import models
+#from app import models
 
-from app import config as con
+#from app import config as con
+
+from app.models import Base
+from app.config import settings
 
 
 
@@ -22,7 +25,7 @@ from app import config as con
 config = context.config
 
 
-config.set_main_option("sqlalchemy.url", f'postgresql://{con.settings.database_username}:{con.settings.database_password}@{con.settings.database_hostname}/{con.settings.database_name}' )
+config.set_main_option("sqlalchemy.url", f'postgresql://{settings.database_username}:{settings.database_password}@{settings.database_hostname}/{settings.database_name}' )
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
@@ -33,7 +36,7 @@ fileConfig(config.config_file_name)
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
-target_metadata = models.Base.metadata
+target_metadata = Base.metadata
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:
