@@ -20,7 +20,7 @@ from sqlalchemy.orm import Session
 
 #import schemas
 
-from database import engine, get_db
+#from database import engine, get_db
 
 #import utils
 
@@ -30,7 +30,7 @@ from database import engine, get_db
 #import oauth2
 
 from .. import models, schemas, oauth2
-from ..database import get_db
+from ..database import get_db,engine
 
 
 models.Base.metadata.create_all(bind=engine)
