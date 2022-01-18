@@ -2,7 +2,7 @@
 
 from fastapi import  status, HTTPException, Depends, APIRouter
 from fastapi.params import Depends
-from passlib.utils.decor import deprecated_function
+
 
 
 
@@ -40,7 +40,7 @@ router= APIRouter(tags=["Users"])
 
 
 @router.post("/user", response_model= schemas.userout)
-def user( read: schemas.createuser, db: Session= Depends(get_db)):
+def create_user( read: schemas.createuser, db: Session= Depends(get_db)):
     
     #hash password- read.passwrd
 

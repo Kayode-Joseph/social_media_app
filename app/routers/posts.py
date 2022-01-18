@@ -76,16 +76,6 @@ def create_post(read: schemas.Post, db: Session= Depends(get_db), current_user= 
     
     return posts
 
-@router.get("/sqlalchemy")
-
-def test_posts(db: Session= Depends(get_db)):
-
-    
-
-    posts= db.query(models.Post).filter(models.Post.id==2).all()
-    
-    
-    return {'posts':posts}
 
 
 
