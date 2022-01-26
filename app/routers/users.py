@@ -60,12 +60,16 @@ def create_user( read: schemas.createuser, db: Session= Depends(get_db)):
 
 
 
-@router.get('/user/{id}', response_model= schemas.userOutfr)
+@router.get('/user/{id}' , response_model= schemas.userOutfr)
 
 def get_user(id:int, db: Session= Depends(get_db) ):
-    user= db.query(models.User, func.count(models.Follow.following).label("followers")).filter(models.User.id==id).join(models.Follow, models.User.id==models.Follow.following).group_by(models.User.id).first()
-    
-    if not user:
-        raise HTTPException(status_code= status.HTTP_404_NOT_FOUND, details= f"user with this {id} deos not exist" )
 
-    return user
+
+
+    user= db.query(models.User, func.count(models.Follow.following).label("followers")).join(models.Follow, models.User.id==models.Follow.following, isouter=True).group_by(models.Follow.follower, models.User.id).filter(models.User.id==id)
+    
+    print(user)
+    if not user.first():
+        raise HTTPException(status_code= status.HTTP_404_NOT_FOUND, detail= f"user with this {id} deos not exist" )
+
+    return user.first()
