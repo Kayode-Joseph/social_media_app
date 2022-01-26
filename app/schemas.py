@@ -26,6 +26,12 @@ class userout(BaseModel):
     class Config:     #convert from orm class to pydantic class. needed when returning data
         orm_mode=True
 
+class userOutfr(BaseModel):
+    User: userout
+    followers:int
+
+    class Config:     #convert from orm class to pydantic class. needed when returning data
+        orm_mode=True
 
 
 class Post(BaseClass):
@@ -83,7 +89,17 @@ class Vote(BaseModel):
             raise ValueError(f'Must be either {directions}')
         return dir
 
-   
+
+class Follow(BaseModel):
+    following: int
+    dir: int
+    @validator('dir')
+    def number_must_equal_0_or_1(cls,dir):
+        directions=[0,1]
+
+        if dir not in directions:
+            raise ValueError(f'Must be either {directions}')
+        return dir
 
 
 

@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import List, Optional
 
 from fastapi import  status, HTTPException, Depends, APIRouter
 from fastapi.params import  Depends
@@ -39,7 +39,7 @@ router = APIRouter( prefix= "/posts",
 tags=["Posts"])
 
 
-@router.get("/" ,status_code=status.HTTP_200_OK ) #response_model=List[schemas.PostOut])
+@router.get("/" ,status_code=status.HTTP_200_OK , response_model=List[schemas.PostOut])
 def get_post(db: Session= Depends(get_db), limit: int= 10, skip:int =0, search: Optional[str]= ""):
 
    # print("EROOR:" , models.Post) 
@@ -50,9 +50,20 @@ def get_post(db: Session= Depends(get_db), limit: int= 10, skip:int =0, search: 
     #print(post)
 
     results= db.query(models.Post, func.count(models.Vote.post_id).label("votes")).join(models.Vote, models.Vote.post_id==models.Post.id, isouter= True).group_by(models.Post.id).filter(models.Post.title.contains(search)).limit(limit).offset(skip).all()#, func.count(models.Vote.post_id).label("votes")).join(models.Vote, models.Vote.post_id==models.Post.id, isouter= True).group_by(models.Post.id).filter(models.Post.title.contains(search)).limit(limit).offset(skip).all()
+   
+    print(db.query(models.Post, func.count(models.Vote.post_id).label("votes")).join(models.Vote, models.Vote.post_id==models.Post.id, isouter= True).group_by(models.Post.id).filter(models.Post.title.contains(search)).limit(limit).offset(skip))
     
-    print (db.query(models.Post, func.count(models.Vote.post_id).label("votes")).join(models.Vote, models.Vote.post_id==models.Post.id, isouter= True).group_by(models.Post.id).filter(models.Post.title.contains(search)).limit(limit).offset(skip).all())
+    #print (db.query(models.Post, func.count(models.Vote.post_id).label("votes")).join(models.Vote, models.Vote.post_id==models.Post.id, isouter= True).group_by(models.Post.id).filter(models.Post.title.contains(search)).limit(limit).offset(skip).all())
     return results
+
+@router.get("/followers") #response_model=List[schemas.PostOut])
+def get_post_followers(db: Session= Depends(get_db),current_user = Depends(oauth2.get_current_user)):
+
+    post=db.query(models.Post, func.count(models.Vote.post_id).label("votes")).join(models.Follow, models.Follow.following==models.Post.owner_id, isouter=True).filter(current_user.id==models.Follow.follower).join(models.Vote, models.Vote.post_id==models.Post.id, isouter= True).group_by(models.Post.id).all()
+
+    print(post)
+
+    return post
 
 
 @router.post("/", response_model=schemas.PostResponse)
@@ -156,6 +167,11 @@ def update_post(id:int, read:schemas.BaseClass, db: Session= Depends(get_db), cu
         #v=v.dict()
         
         return post_query.first()
+
+
+
+
+    
 
 
 

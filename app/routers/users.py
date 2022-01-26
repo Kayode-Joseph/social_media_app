@@ -1,10 +1,11 @@
 
 
+from pyexpat import model
 from fastapi import  status, HTTPException, Depends, APIRouter
 from fastapi.params import Depends
 
 
-
+from sqlalchemy import func
 
 from sqlalchemy.orm import Session
 
@@ -59,10 +60,10 @@ def create_user( read: schemas.createuser, db: Session= Depends(get_db)):
 
 
 
-@router.get('/user/{id}', response_model= schemas.userout)
+@router.get('/user/{id}', response_model= schemas.userOutfr)
 
 def get_user(id:int, db: Session= Depends(get_db) ):
-    user= db.query(models.User).filter(models.User.id==id).first()
+    user= db.query(models.User, func.count(models.Follow.following).label("followers")).filter(models.User.id==id).join(models.Follow, models.User.id==models.Follow.following).group_by(models.User.id).first()
     
     if not user:
         raise HTTPException(status_code= status.HTTP_404_NOT_FOUND, details= f"user with this {id} deos not exist" )
