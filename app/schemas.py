@@ -33,6 +33,8 @@ class userOutfr(BaseModel):
     class Config:     #convert from orm class to pydantic class. needed when returning data
         orm_mode=True
 
+class get_followers_out(BaseModel):
+    User:userout
 
 class Post(BaseClass):
 
